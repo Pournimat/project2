@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">project2</string>
+    <string name="details">DualSense also adds a built-in
+microphone array, which will
+enable players to chat easily.</string>
+    <string name="price">50</string>
+    <string name="t1">White nd Black Version</string>
+    <string name="t2">Black nd Black Version</string>
+    <string name="t3">Red nd Black Version</string>
+</resources>

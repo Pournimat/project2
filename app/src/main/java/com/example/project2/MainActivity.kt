@@ -1,12 +1,12 @@
 package com.example.project2
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.custom_layout.view.*
 class MainActivity : AppCompatActivity() {
 
     val adapter = GroupAdapter<ViewHolder>()
-
+lateinit var activity : AppCompatActivity
     lateinit var rv: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,30 +46,47 @@ class MainActivity : AppCompatActivity() {
             if (position == 0) {
                 viewHolder.itemView.iv.setImageResource(R.drawable.image1)
                 viewHolder.itemView.tv.setText(R.string.t1)
-                viewHolder.itemView.iv.setOnClickListener {
-                    val intent = Intent(viewHolder.itemView.iv.context, productd::class.java)
-                    startActivity(intent)
-                }
+
+                navigate(viewHolder.itemView.iv,"first")
+
             }
 
             if (position == 1) {
                 viewHolder.itemView.iv.setImageResource(R.drawable.image2)
                 viewHolder.itemView.tv.setText(R.string.t2)
-                viewHolder.itemView.iv.setOnClickListener {
-                    val intent = Intent(viewHolder.itemView.iv.context, productd2::class.java)
-                    startActivity(intent)
-                }
+                navigate(viewHolder.itemView.iv,"second")
 
             }
                 if (position == 2) {
                     viewHolder.itemView.iv.setImageResource(R.drawable.image3)
                     viewHolder.itemView.tv.setText( R.string.t3)
-                    viewHolder.itemView.iv.setOnClickListener {
-                        val intent = Intent(viewHolder.itemView.iv.context, productd3::class.java)
-                        startActivity(intent)
-                    }
+                    navigate(viewHolder.itemView.iv,"third")
                 }
             }
         }
+
+    private fun navigate(iv: ImageView, s: String) {
+
+        when(s ) {
+            "first" -> activity =  productd()
+            "second" -> activity =  productd2()
+            else -> activity =  productd3()
+        }
+
+         iv.setOnClickListener {
+             val animation = AnimationUtils.loadAnimation(this, R.anim.slide_right)
+             imageView10.startAnimation(animation)
+
+            var int = Intent( iv.context,
+                activity::class.java)
+            val bundle =
+                ActivityOptionsCompat.makeCustomAnimation(
+                    iv.context ,
+                    R.anim.fade_in, R.anim.fade_out
+                ).toBundle()
+
+            startActivity(int,bundle)
+        }
     }
+}
 
